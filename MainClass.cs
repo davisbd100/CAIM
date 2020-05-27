@@ -20,6 +20,7 @@ namespace CAIM
             Console.WriteLine(DataSetPath);
             ReadData();
             GetUniqueValues();
+            CheckCaimValue();
 
             Console.WriteLine();
         }
@@ -55,6 +56,7 @@ namespace CAIM
                 CheckAttribute(flower.PetalLength);
                 CheckAttribute(flower.PetalWidth);
             }
+            UniqueValues.OrderBy(i => i);
         }
 
         void CheckAttribute(double value)
@@ -71,6 +73,106 @@ namespace CAIM
                     UniqueValues.Add(value);
                 }
             }
+        }
+
+        void CheckCaimValue()
+        {
+            int k = 0;
+            List<double> bestValues = new List<double>();
+            List<double> tempUniqueValues = new List<double>();
+            tempUniqueValues.Add(UniqueValues.First());
+            tempUniqueValues.Add(UniqueValues.Last());
+            CalculateCAIM(tempUniqueValues);
+            CAIMArray tempCAIMArray = new CAIMArray();
+
+
+            Console.WriteLine();
+        }
+
+
+        double CalculateCAIM(List<double> list)
+        {
+            double result;
+            list = list.OrderBy(i => i).ToList();
+
+            int cont = 0;
+            List<List<double>> table = new List<List<double>>();
+            table.Add(new List<double>());
+            table.Add(new List<double>());
+            table.Add(new List<double>());
+            for (int i = 0; i < list.Count - 1; i++)
+            {
+                foreach (var listas in table)
+                {
+                    listas.Add(0);
+                }
+                double min = list[i];
+                double max = list[i + 1];
+                cont++;
+                foreach (var flower in Flowers)
+                {
+                    switch (flower.ClassName)
+                    {
+                        case "Iris-setosa":
+                            if (flower.PetalLength > min && flower.PetalLength < max)
+                            {
+                                table[0][i] = table[0][i] + 1;
+                            }
+                            if (flower.PetalWidth > min && flower.PetalWidth < max)
+                            {
+                                table[0][i] = table[0][i] + 1;
+                            }
+                            if (flower.SepalLength > min && flower.SepalLength < max)
+                            {
+                                table[0][i] = table[0][i] + 1;
+                            }
+                            if (flower.SepalLength > min && flower.SepalLength < max)
+                            {
+                                table[0][i] = table[0][i] + 1;
+                            }
+                            break;
+                        case "Iris-versicolor":
+                            if (flower.PetalLength > min && flower.PetalLength < max)
+                            {
+                                table[1][i] = table[1][i] + 1;
+                            }
+                            if (flower.PetalWidth > min && flower.PetalWidth < max)
+                            {
+                                table[1][i] = table[1][i] + 1;
+                            }
+                            if (flower.SepalLength > min && flower.SepalLength < max)
+                            {
+                                table[1][i] = table[1][i] + 1;
+                            }
+                            if (flower.SepalLength > min && flower.SepalLength < max)
+                            {
+                                table[1][i] = table[1][i] + 1;
+                            }
+                            break;
+                        case "Iris-virginica":
+                            if (flower.PetalLength > min && flower.PetalLength < max)
+                            {
+                                table[2][i] = table[2][i] + 1;
+                            }
+                            if (flower.PetalWidth > min && flower.PetalWidth < max)
+                            {
+                                table[2][i] = table[2][i] + 1;
+                            }
+                            if (flower.SepalLength > min && flower.SepalLength < max)
+                            {
+                                table[2][i] = table[2][i] + 1;
+                            }
+                            if (flower.SepalLength > min && flower.SepalLength < max)
+                            {
+                                table[2][i] = table[2][i] + 1;
+                            }
+                            break;
+                    }
+                }
+                Console.WriteLine();
+            }
+
+            return result = 0;
         }
     }
 }
