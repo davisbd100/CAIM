@@ -82,17 +82,23 @@ namespace CAIM
             List<double> tempUniqueValues = new List<double>();
             tempUniqueValues.Add(UniqueValues.First());
             tempUniqueValues.Add(UniqueValues.Last());
-            CalculateCAIM(tempUniqueValues);
-            CAIMArray tempCAIMArray = new CAIMArray();
+            CAIMArray tempCAIMArray = new CAIMArray(tempUniqueValues, CalculateCAIM(tempUniqueValues));4
+
 
 
             Console.WriteLine();
         }
 
 
+
+
+
+
+
+
         double CalculateCAIM(List<double> list)
         {
-            double result;
+            double result = 0;
             list = list.OrderBy(i => i).ToList();
 
             int cont = 0;
@@ -126,7 +132,7 @@ namespace CAIM
                             {
                                 table[0][i] = table[0][i] + 1;
                             }
-                            if (flower.SepalLength > min && flower.SepalLength < max)
+                            if (flower.SepalWidth > min && flower.SepalWidth < max)
                             {
                                 table[0][i] = table[0][i] + 1;
                             }
@@ -144,7 +150,7 @@ namespace CAIM
                             {
                                 table[1][i] = table[1][i] + 1;
                             }
-                            if (flower.SepalLength > min && flower.SepalLength < max)
+                            if (flower.SepalWidth > min && flower.SepalWidth < max)
                             {
                                 table[1][i] = table[1][i] + 1;
                             }
@@ -162,17 +168,40 @@ namespace CAIM
                             {
                                 table[2][i] = table[2][i] + 1;
                             }
-                            if (flower.SepalLength > min && flower.SepalLength < max)
+                            if (flower.SepalWidth > min && flower.SepalWidth < max)
                             {
                                 table[2][i] = table[2][i] + 1;
                             }
                             break;
                     }
                 }
-                Console.WriteLine();
+            }
+            List<double> verticalresult = new List<double>();
+            for (int i = 0; i < table[0].Count; i++)
+            {
+                double sum = table[0][i] + table[1][i] + table[2][i];
+                Math.Max(table[0][i], Math.Max(table[1][i], table[2][i]));
+                verticalresult.Add(sum);
+            }
+            table.Add(verticalresult);
+            foreach (var lista in table)
+            {
+                double sum = 0;
+                foreach (var Numero in lista)
+                {
+                    sum += Numero;
+                }
+                lista.Add(sum);
             }
 
-            return result = 0;
+            for (int i = 0; i < table[0].Count; i++)
+            {
+                double maxColumnValue = Math.Max(table[0][i], Math.Max(table[1][i], table[2][i]));
+                result += (Math.Pow(maxColumnValue, 2)) / table[3][i];
+            }
+            result /= cont;
+            Console.WriteLine();
+            return result;
         }
     }
 }
