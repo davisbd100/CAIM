@@ -56,7 +56,8 @@ namespace CAIM
                 CheckAttribute(flower.PetalLength);
                 CheckAttribute(flower.PetalWidth);
             }
-            UniqueValues.OrderBy(i => i);
+            UniqueValues = UniqueValues.OrderBy(j => j).ToList();
+            Console.WriteLine();
         }
 
         void CheckAttribute(double value)
@@ -77,14 +78,41 @@ namespace CAIM
 
         void CheckCaimValue()
         {
-            int k = 0;
             List<double> bestValues = new List<double>();
             List<double> tempUniqueValues = new List<double>();
-            tempUniqueValues.Add(UniqueValues.First());
-            tempUniqueValues.Add(UniqueValues.Last());
-            CAIMArray tempCAIMArray = new CAIMArray(tempUniqueValues, CalculateCAIM(tempUniqueValues));4
+            List<double> backupUniqueValues = UniqueValues.ToList();
+            tempUniqueValues.Add(backupUniqueValues.First());
+            tempUniqueValues.Add(backupUniqueValues.Last());
+            backupUniqueValues.Remove(backupUniqueValues.First());
+            backupUniqueValues.Remove(backupUniqueValues.Last());
+            tempUniqueValues = tempUniqueValues.OrderBy(i => i).ToList();
+            double globalValue = 0;
+            while (backupUniqueValues.Any())
+            {
+                List<CAIMArray> listCAIM = new List<CAIMArray>();
 
+                for (int i = 0; i < backupUniqueValues.Count; i++)
+                {
+                    List<double> aidValues = tempUniqueValues;
+                    aidValues.Add(backupUniqueValues[i]);
+                    aidValues = aidValues.OrderBy(j => j).ToList();
+                    listCAIM.Add(new CAIMArray(aidValues, CalculateCAIM(aidValues), backupUniqueValues[i]));
+                }
+                listCAIM = listCAIM.OrderBy(j => j.CAIMValue).ToList();
+                CAIMArray saveCAIM = listCAIM.Last();
 
+                if (saveCAIM.CAIMValue > globalValue)
+                {
+                    globalValue = saveCAIM.CAIMValue;
+                    tempUniqueValues.Add(saveCAIM.AddedValue);
+                    tempUniqueValues = tempUniqueValues.OrderBy(i => i).ToList();
+                    backupUniqueValues.Remove(saveCAIM.AddedValue);
+                }
+                else
+                {
+                    break;
+                }
+            }
 
             Console.WriteLine();
         }
@@ -99,8 +127,6 @@ namespace CAIM
         double CalculateCAIM(List<double> list)
         {
             double result = 0;
-            list = list.OrderBy(i => i).ToList();
-
             int cont = 0;
             List<List<double>> table = new List<List<double>>();
             table.Add(new List<double>());
@@ -197,10 +223,13 @@ namespace CAIM
             for (int i = 0; i < table[0].Count; i++)
             {
                 double maxColumnValue = Math.Max(table[0][i], Math.Max(table[1][i], table[2][i]));
-                result += (Math.Pow(maxColumnValue, 2)) / table[3][i];
+                if (!(table[3][i] == 0))
+                {
+                    result += (Math.Pow(maxColumnValue, 2)) / table[3][i];
+                }
             }
             result /= cont;
-            Console.WriteLine();
+            Console.WriteLine(result);
             return result;
         }
     }
