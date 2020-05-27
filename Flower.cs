@@ -22,5 +22,9 @@ namespace CAIM
             this.PetalWidth = petalWidth;
             this.ClassName = className;
         }
+        public Flower()
+        {
+
+        }
     }
 }

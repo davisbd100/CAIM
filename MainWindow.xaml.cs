@@ -23,6 +23,8 @@ namespace CAIM
         public MainWindow()
         {
             InitializeComponent();
+            MainClass main = new MainClass();
         }
+        
     }
 }
