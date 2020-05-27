@@ -12,14 +12,19 @@ namespace CAIM
     {
         static string DataSetPath = ("C:/Users/bestr/Desktop/Repositorios/Iris/Dataset/iris.data");
         List<Flower> Flowers = new List<Flower>();
+        List<double> UniqueValues = new List<double>();
+        List<double> repeatedValues = new List<double>();
 
         public MainClass()
         {
             Console.WriteLine(DataSetPath);
             ReadData();
+            GetUniqueValues();
+
+            Console.WriteLine();
         }
 
-        public void ReadData()
+        void ReadData()
         {
             using (var parser = new TextFieldParser(DataSetPath))
             {
@@ -39,7 +44,33 @@ namespace CAIM
                     Flowers.Add(tempFlower);
                 }
             }
-            Console.WriteLine();
+        }
+
+        void GetUniqueValues()
+        {
+            foreach (var flower in Flowers)
+            {
+                CheckAttribute(flower.SepalLength);
+                CheckAttribute(flower.SepalWidth);
+                CheckAttribute(flower.PetalLength);
+                CheckAttribute(flower.PetalWidth);
+            }
+        }
+
+        void CheckAttribute(double value)
+        {
+            if (!repeatedValues.Contains(value))
+            {
+                if (UniqueValues.Contains(value))
+                {
+                    UniqueValues.Remove(value);
+                    repeatedValues.Add(value);
+                }
+                else
+                {
+                    UniqueValues.Add(value);
+                }
+            }
         }
     }
 }
