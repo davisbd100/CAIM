@@ -11,7 +11,7 @@ namespace CAIM
     public class MainClass
     {
         static string DataSetPath = ("C:/Users/bestr/Desktop/Repositorios/Iris/Dataset/iris.data");
-        List<Flower> Flowers = new List<Flower>();
+        public List<Flower> Flowers = new List<Flower>();
         List<double> UniqueValues = new List<double>();
 
         public MainClass()

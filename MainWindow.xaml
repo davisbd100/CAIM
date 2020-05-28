@@ -3,10 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:local="clr-namespace:CAIM"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="VentanaPrincipal" Height="720" Width="1100" ResizeMode="NoResize">
     <Grid>
-        
+        <lvc:CartesianChart x:Name="scSepal" LegendLocation="Bottom" Margin="29,38,41.6,362.4">
+            <lvc:CartesianChart.Series>
+                <lvc:ScatterSeries Title="Setosa" Values="{Binding SepalSetosa}" />
+                <lvc:ScatterSeries Title="Versicolor" Values="{Binding SepalVersicolor}" />
+                <lvc:ScatterSeries Title="Virginica" Values="{Binding SepalVirginica}" />
+            </lvc:CartesianChart.Series>
+        </lvc:CartesianChart>
+        <lvc:CartesianChart x:Name="scPetal" LegendLocation="Bottom" Margin="29,356,41.6,28.4">
+            <lvc:CartesianChart.Series>
+                <lvc:ScatterSeries Title="Setosa" Values="{Binding PetalSetosa}" />
+                <lvc:ScatterSeries Title="Versicolor" Values="{Binding PetalVersicolor}" />
+                <lvc:ScatterSeries Title="Virginica" Values="{Binding PetalVirginica}" />
+            </lvc:CartesianChart.Series>
+        </lvc:CartesianChart>
+        <TextBlock x:Name="tblSepalo" HorizontalAlignment="Left" Margin="490,15,0,0" TextWrapping="Wrap" Text="Sepalo" VerticalAlignment="Top" Height="18" Width="107"/>
+        <TextBlock x:Name="tblPetalo" HorizontalAlignment="Left" Margin="490,333,0,0" TextWrapping="Wrap" Text="Petalo" VerticalAlignment="Top" Height="18" Width="39"/>
     </Grid>
 </Window>
