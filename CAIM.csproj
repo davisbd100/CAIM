@@ -65,6 +65,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CAIMArray.cs" />
+    <Compile Include="DataStorage.cs" />
     <Compile Include="Flower.cs" />
     <Compile Include="MainClass.cs" />
     <Compile Include="MainWindow.xaml.cs">
