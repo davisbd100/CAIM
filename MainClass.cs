@@ -17,9 +17,6 @@ namespace CAIM
         public MainClass()
         {
             ReadData();
-            Console.WriteLine();
-            AlgorithOrchestrator();
-            Console.WriteLine();
         }
 
         void ReadData()
@@ -89,7 +86,6 @@ namespace CAIM
                     break;
             }
             UniqueValues = UniqueValues.OrderBy(j => j).ToList();
-            Console.WriteLine();
         }
 
         void CheckAttribute(double value)
@@ -329,7 +325,6 @@ namespace CAIM
                 lista.Add(sum);
             }
             result /= cont;
-            Console.WriteLine(result);
             return result;
         }
 
