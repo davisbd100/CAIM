@@ -13,7 +13,6 @@ namespace CAIM
         static string DataSetPath = ("C:/Users/bestr/Desktop/Repositorios/Iris/Dataset/iris.data");
         List<Flower> Flowers = new List<Flower>();
         List<double> UniqueValues = new List<double>();
-        List<double> repeatedValues = new List<double>();
 
         public MainClass()
         {
@@ -62,17 +61,9 @@ namespace CAIM
 
         void CheckAttribute(double value)
         {
-            if (!repeatedValues.Contains(value))
+            if (!UniqueValues.Contains(value))
             {
-                if (UniqueValues.Contains(value))
-                {
-                    UniqueValues.Remove(value);
-                    repeatedValues.Add(value);
-                }
-                else
-                {
-                    UniqueValues.Add(value);
-                }
+                UniqueValues.Add(value);
             }
         }
 
@@ -86,6 +77,7 @@ namespace CAIM
             backupUniqueValues.Remove(backupUniqueValues.First());
             backupUniqueValues.Remove(backupUniqueValues.Last());
             tempUniqueValues = tempUniqueValues.OrderBy(i => i).ToList();
+            int k = 1;
             double globalValue = 0;
             while (backupUniqueValues.Any())
             {
@@ -93,7 +85,7 @@ namespace CAIM
 
                 for (int i = 0; i < backupUniqueValues.Count; i++)
                 {
-                    List<double> aidValues = tempUniqueValues;
+                    List<double> aidValues = tempUniqueValues.ToList();
                     aidValues.Add(backupUniqueValues[i]);
                     aidValues = aidValues.OrderBy(j => j).ToList();
                     listCAIM.Add(new CAIMArray(aidValues, CalculateCAIM(aidValues), backupUniqueValues[i]));
@@ -101,12 +93,13 @@ namespace CAIM
                 listCAIM = listCAIM.OrderBy(j => j.CAIMValue).ToList();
                 CAIMArray saveCAIM = listCAIM.Last();
 
-                if (saveCAIM.CAIMValue > globalValue)
+                if (saveCAIM.CAIMValue > globalValue || k < 13)
                 {
                     globalValue = saveCAIM.CAIMValue;
                     tempUniqueValues.Add(saveCAIM.AddedValue);
                     tempUniqueValues = tempUniqueValues.OrderBy(i => i).ToList();
                     backupUniqueValues.Remove(saveCAIM.AddedValue);
+                    k++;
                 }
                 else
                 {
@@ -114,7 +107,7 @@ namespace CAIM
                 }
             }
 
-            Console.WriteLine();
+                Console.WriteLine();
         }
 
 
@@ -127,7 +120,7 @@ namespace CAIM
         double CalculateCAIM(List<double> list)
         {
             double result = 0;
-            int cont = 0;
+            int cont = list.Count - 1;
             List<List<double>> table = new List<List<double>>();
             table.Add(new List<double>());
             table.Add(new List<double>());
@@ -140,61 +133,60 @@ namespace CAIM
                 }
                 double min = list[i];
                 double max = list[i + 1];
-                cont++;
                 foreach (var flower in Flowers)
                 {
                     switch (flower.ClassName)
                     {
                         case "Iris-setosa":
-                            if (flower.PetalLength > min && flower.PetalLength < max)
+                            if (flower.PetalLength >= min && flower.PetalLength < max)
                             {
                                 table[0][i] = table[0][i] + 1;
                             }
-                            if (flower.PetalWidth > min && flower.PetalWidth < max)
+                            if (flower.PetalWidth >= min && flower.PetalWidth < max)
                             {
                                 table[0][i] = table[0][i] + 1;
                             }
-                            if (flower.SepalLength > min && flower.SepalLength < max)
+                            if (flower.SepalLength >= min && flower.SepalLength < max)
                             {
                                 table[0][i] = table[0][i] + 1;
                             }
-                            if (flower.SepalWidth > min && flower.SepalWidth < max)
+                            if (flower.SepalWidth >= min && flower.SepalWidth < max)
                             {
                                 table[0][i] = table[0][i] + 1;
                             }
                             break;
                         case "Iris-versicolor":
-                            if (flower.PetalLength > min && flower.PetalLength < max)
+                            if (flower.PetalLength >= min && flower.PetalLength < max)
                             {
                                 table[1][i] = table[1][i] + 1;
                             }
-                            if (flower.PetalWidth > min && flower.PetalWidth < max)
+                            if (flower.PetalWidth >= min && flower.PetalWidth < max)
                             {
                                 table[1][i] = table[1][i] + 1;
                             }
-                            if (flower.SepalLength > min && flower.SepalLength < max)
+                            if (flower.SepalLength >= min && flower.SepalLength < max)
                             {
                                 table[1][i] = table[1][i] + 1;
                             }
-                            if (flower.SepalWidth > min && flower.SepalWidth < max)
+                            if (flower.SepalWidth >= min && flower.SepalWidth < max)
                             {
                                 table[1][i] = table[1][i] + 1;
                             }
                             break;
                         case "Iris-virginica":
-                            if (flower.PetalLength > min && flower.PetalLength < max)
+                            if (flower.PetalLength >= min && flower.PetalLength < max)
                             {
                                 table[2][i] = table[2][i] + 1;
                             }
-                            if (flower.PetalWidth > min && flower.PetalWidth < max)
+                            if (flower.PetalWidth >= min && flower.PetalWidth < max)
                             {
                                 table[2][i] = table[2][i] + 1;
                             }
-                            if (flower.SepalLength > min && flower.SepalLength < max)
+                            if (flower.SepalLength >= min && flower.SepalLength < max || (max == 7.9 && flower.SepalLength == 7.9))
                             {
                                 table[2][i] = table[2][i] + 1;
                             }
-                            if (flower.SepalWidth > min && flower.SepalWidth < max)
+                            if (flower.SepalWidth >= min && flower.SepalWidth < max)
                             {
                                 table[2][i] = table[2][i] + 1;
                             }
@@ -206,10 +198,17 @@ namespace CAIM
             for (int i = 0; i < table[0].Count; i++)
             {
                 double sum = table[0][i] + table[1][i] + table[2][i];
-                Math.Max(table[0][i], Math.Max(table[1][i], table[2][i]));
                 verticalresult.Add(sum);
             }
             table.Add(verticalresult);
+
+            for (int i = 0; i < table[0].Count; i++)
+            {
+                double maxColumnValue = Math.Max(table[0][i], Math.Max(table[1][i], table[2][i]));
+                double divValue = table[3][i];
+                result += (Math.Pow(maxColumnValue, 2)) / divValue;
+            }
+
             foreach (var lista in table)
             {
                 double sum = 0;
@@ -218,15 +217,6 @@ namespace CAIM
                     sum += Numero;
                 }
                 lista.Add(sum);
-            }
-
-            for (int i = 0; i < table[0].Count; i++)
-            {
-                double maxColumnValue = Math.Max(table[0][i], Math.Max(table[1][i], table[2][i]));
-                if (!(table[3][i] == 0))
-                {
-                    result += (Math.Pow(maxColumnValue, 2)) / table[3][i];
-                }
             }
             result /= cont;
             Console.WriteLine(result);
