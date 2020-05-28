@@ -51,9 +51,9 @@ namespace CAIM
             foreach (var flower in Flowers)
             {
                 CheckAttribute(flower.SepalLength);
-                CheckAttribute(flower.SepalWidth);
-                CheckAttribute(flower.PetalLength);
-                CheckAttribute(flower.PetalWidth);
+                //CheckAttribute(flower.SepalWidth);
+                //CheckAttribute(flower.PetalLength);
+                //CheckAttribute(flower.PetalWidth);
             }
             UniqueValues = UniqueValues.OrderBy(j => j).ToList();
             Console.WriteLine();
@@ -93,7 +93,7 @@ namespace CAIM
                 listCAIM = listCAIM.OrderBy(j => j.CAIMValue).ToList();
                 CAIMArray saveCAIM = listCAIM.Last();
 
-                if (saveCAIM.CAIMValue > globalValue || k < 13)
+                if (saveCAIM.CAIMValue > globalValue || k < 3)
                 {
                     globalValue = saveCAIM.CAIMValue;
                     tempUniqueValues.Add(saveCAIM.AddedValue);
@@ -107,7 +107,7 @@ namespace CAIM
                 }
             }
 
-                Console.WriteLine();
+                //Console.WriteLine();
         }
 
 
@@ -138,58 +138,58 @@ namespace CAIM
                     switch (flower.ClassName)
                     {
                         case "Iris-setosa":
-                            if (flower.PetalLength >= min && flower.PetalLength < max)
-                            {
-                                table[0][i] = table[0][i] + 1;
-                            }
-                            if (flower.PetalWidth >= min && flower.PetalWidth < max)
-                            {
-                                table[0][i] = table[0][i] + 1;
-                            }
+                            //if (flower.PetalLength >= min && flower.PetalLength < max)
+                            //{
+                            //    table[0][i] = table[0][i] + 1;
+                            //}
+                            //if (flower.PetalWidth >= min && flower.PetalWidth < max)
+                            //{
+                            //    table[0][i] = table[0][i] + 1;
+                            //}
                             if (flower.SepalLength >= min && flower.SepalLength < max)
                             {
                                 table[0][i] = table[0][i] + 1;
                             }
-                            if (flower.SepalWidth >= min && flower.SepalWidth < max)
-                            {
-                                table[0][i] = table[0][i] + 1;
-                            }
+                            //if (flower.SepalWidth >= min && flower.SepalWidth < max)
+                            //{
+                            //    table[0][i] = table[0][i] + 1;
+                            //}
                             break;
                         case "Iris-versicolor":
-                            if (flower.PetalLength >= min && flower.PetalLength < max)
-                            {
-                                table[1][i] = table[1][i] + 1;
-                            }
-                            if (flower.PetalWidth >= min && flower.PetalWidth < max)
-                            {
-                                table[1][i] = table[1][i] + 1;
-                            }
+                            //if (flower.PetalLength >= min && flower.PetalLength < max)
+                            //{
+                            //    table[1][i] = table[1][i] + 1;
+                            //}
+                            //if (flower.PetalWidth >= min && flower.PetalWidth < max)
+                            //{
+                            //    table[1][i] = table[1][i] + 1;
+                            //}
                             if (flower.SepalLength >= min && flower.SepalLength < max)
                             {
                                 table[1][i] = table[1][i] + 1;
                             }
-                            if (flower.SepalWidth >= min && flower.SepalWidth < max)
-                            {
-                                table[1][i] = table[1][i] + 1;
-                            }
+                            //if (flower.SepalWidth >= min && flower.SepalWidth < max)
+                            //{
+                            //    table[1][i] = table[1][i] + 1;
+                            //}
                             break;
                         case "Iris-virginica":
-                            if (flower.PetalLength >= min && flower.PetalLength < max)
-                            {
-                                table[2][i] = table[2][i] + 1;
-                            }
-                            if (flower.PetalWidth >= min && flower.PetalWidth < max)
-                            {
-                                table[2][i] = table[2][i] + 1;
-                            }
+                            //if (flower.PetalLength >= min && flower.PetalLength < max)
+                            //{
+                            //    table[2][i] = table[2][i] + 1;
+                            //}
+                            //if (flower.PetalWidth >= min && flower.PetalWidth < max)
+                            //{
+                            //    table[2][i] = table[2][i] + 1;
+                            //}
                             if (flower.SepalLength >= min && flower.SepalLength < max || (max == 7.9 && flower.SepalLength == 7.9))
                             {
                                 table[2][i] = table[2][i] + 1;
                             }
-                            if (flower.SepalWidth >= min && flower.SepalWidth < max)
-                            {
-                                table[2][i] = table[2][i] + 1;
-                            }
+                            //if (flower.SepalWidth >= min && flower.SepalWidth < max)
+                            //{
+                            //    table[2][i] = table[2][i] + 1;
+                            //}
                             break;
                     }
                 }
